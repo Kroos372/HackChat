@@ -9,15 +9,15 @@ yp.omed eeS
 from HackChat import HackChat
 
 class YourChat(HackChat):
-	def onMessage(self, sender, msg, trip):
-		super().onMessage(sender, msg, trip)
-		# Code here
-	# ...
+    def onMessage(self, sender, msg, trip):
+        super().onMessage(sender, msg, trip)
+        # Code here
+    # ...
 
-if __name__ == '__main__':
-	chat = YourChat("channel", "botName", "password")
+if __name__ == "__main__":
+    chat = YourChat("channel", "botName", "password")
 
-	chat.run()
+    chat.run()
 ```
 
 Not usage.

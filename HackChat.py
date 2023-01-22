@@ -7,7 +7,7 @@ class HackChat:
         self.nick = nick
         self.passwd = passwd
         self.ws = websocket.create_connection("wss://hack.chat/chat-ws", sslopt={"cert_reqs": ssl.CERT_NONE})
-        self._sendPacket({"cmd": "join", "channel": channel, "nick": nick, "password": passwd })
+        self._sendPacket({"cmd": "join", "channel": channel, "nick": nick, "password": passwd})
         if color: self.changeColor(color)
 
     def _sendPacket(self, packet: dict):
@@ -75,7 +75,7 @@ class HackChat:
             # 改变颜色
             elif cmd == "updateUser":
                 self.onColorChange(result["nick"], result["color"], result.get("trip", ""))
-            # emote
+            # Emote
             elif cmd == "emote":
                 self.onEmote(result["nick"], " ".join(result["text"].split(" ")[1:]))
             # 接收到私信
@@ -94,5 +94,5 @@ class HackChat:
             elif cmd == "onlineSet":
                 self.onSet(result["nicks"], result["users"])
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     print("我只是一个库，不要运行我捏~")
