@@ -1,12 +1,12 @@
 ﻿import json, websocket, ssl
 
 class HackChat:
-    def __init__(self, channel: str, nick: str, passwd: str="", color: str=""):
+    def __init__(self, channel: str, nick: str, passwd: str="", color: str="", timeout: int=5):
         self.onlineUsers = []
         self.channel = channel
         self.nick = nick
         self.passwd = passwd
-        self.ws = websocket.create_connection("wss://hack.chat/chat-ws", sslopt={"cert_reqs": ssl.CERT_NONE})
+        self.ws = websocket.create_connection("wss://hack.chat/chat-ws", sslopt={"cert_reqs": ssl.CERT_NONE}, timeout=timeout)
         self._sendPacket({"cmd": "join", "channel": channel, "nick": nick, "password": passwd})
         if color: self.changeColor(color)
 
