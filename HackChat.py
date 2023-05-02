@@ -1,14 +1,20 @@
-﻿import json, websocket, ssl
+﻿import json, websocket, ssl, re
+
+def verifyNick(nick) -> bool:
+    return re.match(r"^@?[\w]{1,24}$", nick)
+def verifyColor(color) -> bool:
+    return re.match(r"^#?(?:[0-9a-fA-F]{3}){1,2}", color)
 
 class HackChat:
-    def __init__(self, channel: str, nick: str, passwd: str="", color: str="", timeout: int=5):
+    def __init__(self, channel: str, nick: str, passwd: str="", color: str=""):
         self.onlineUsers = []
         self.channel = channel
         self.nick = nick
         self.passwd = passwd
-        self.ws = websocket.create_connection("wss://hack.chat/chat-ws", sslopt={"cert_reqs": ssl.CERT_NONE}, timeout=timeout)
+        self.ws = websocket.create_connection("wss://hack.chat/chat-ws", sslopt={"cert_reqs": ssl.CERT_NONE})
         self._sendPacket({"cmd": "join", "channel": channel, "nick": nick, "password": passwd})
-        if color: self.changeColor(color)
+        if color:
+            self.changeColor(color)
 
     def _sendPacket(self, packet: dict):
         encoded = json.dumps(packet)
@@ -24,11 +30,14 @@ class HackChat:
         self._sendPacket({"cmd": "emote", "text": msg})
 
     def changeColor(self, color: str):
-        self._sendPacket({"cmd": "changecolor", "color": color})
+        if verifyColor(color):
+            self.color = color
+            self._sendPacket({"cmd": "changecolor", "color": color})
 
     def changeNick(self, nick: str):
-        self._sendPacket({"cmd": "changenick", "nick": nick})
-        self.nick = nick
+        if verifyNick(nick) and not nick in self.onlineUsers:
+            self._sendPacket({"cmd": "changenick", "nick": nick})
+            self.nick = nick
 
     def invite(self, nick: str, channel: str):
         self._sendPacket({"cmd": "invite", "nick": nick, "channel": channel})
