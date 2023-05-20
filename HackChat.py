@@ -23,10 +23,10 @@ class HackChat:
     def sendMsg(self, msg: str):
         self._sendPacket({"cmd": "chat", "text": msg})
 
-    def sendWhisper(self, to: str, msg: str):
+    def whisper(self, to: str, msg: str):
         self._sendPacket({"cmd": "whisper", "nick": to, "text": msg})
 
-    def sendEmote(self, msg: str):
+    def emote(self, msg: str):
         self._sendPacket({"cmd": "emote", "text": msg})
 
     def changeColor(self, color: str):
