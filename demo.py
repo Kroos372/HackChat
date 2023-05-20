@@ -8,7 +8,7 @@ class MyChat(HackChat):
     def onJoin(self, joiner, hash_, trip):
         super().onJoin(sender, joiner, hash_, trip)
         self.sendMsg(f"Welcome, {joiner}!")
-        self.whisper(joiner, f"Quickly run!!!")
+        self.whisper(joiner, "Quickly run!!!")
 
 if __name__ == "__main__":
     obj = MyChat("test", "MyBot", "NoPassword")
