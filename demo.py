@@ -2,7 +2,6 @@ from HackChat import HackChat
 
 class MyChat(HackChat):
     def onMessage(self, sender, msg, trip):
-        super().onMessage(sender, msg, trip)
         if msg == "hi":
             self.sendMsg(f"Hi, {sender}!")
     def onJoin(self, joiner, hash_, trip):

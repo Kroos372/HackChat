@@ -86,10 +86,10 @@ class HackChat:
                 self.onColorChange(result["nick"], result["color"], result.get("trip", ""))
             # Emote
             elif cmd == "emote":
-                self.onEmote(result["nick"], " ".join(result["text"].split(" ")[1:]))
+                self.onEmote(result["nick"], result["text"].split(" ", 1)[1])
             # 接收到私信
             elif type_ == "whisper":
-                self.onWhisper(result["from"], ": ".join(result["text"].split(": ")[1:]))
+                self.onWhisper(result["from"], result["text"].split(": ", 1)[1])
             # 被人邀请
             elif type_ == "invite":
                 self.onInvite(result["from"], result["inviteChannel"])
